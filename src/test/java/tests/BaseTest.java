@@ -5,6 +5,7 @@ import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
@@ -22,7 +23,14 @@ public class BaseTest {
 		String browserName = ConfigReader.getProperty("browser");
 		
 		if (browserName != null && browserName.equalsIgnoreCase("chrome")) {
-			driver = new ChromeDriver();
+			ChromeOptions options = new ChromeOptions();
+			if (System.getenv("GITHUB_ACTIONS") != null) {
+				options.addArguments("--headless=new");
+				options.addArguments("--no-sandbox");
+				options.addArguments("--disable-dev-shm-usage");
+			}
+			
+			driver = new ChromeDriver(options);
 		} else if (browserName != null && browserName.equalsIgnoreCase("firefox")) {
 			driver = new FirefoxDriver();
 		} else if (browserName != null && browserName.equalsIgnoreCase("edge")) {
