@@ -1,0 +1,13 @@
+# Maven compiled output
+target/
+
+# Eclipse / IDE specific files
+.settings/
+.project
+.classpath
+.idea/
+*.iml
+
+# Test Automation Reports
+test-output/
+reports/
